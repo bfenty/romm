@@ -22,6 +22,10 @@ const routes = [
     path: "/settings/control-panel",
     component: () => import("@/views/settings/ControlPanel.vue"),
   },
+  {
+    path: "/play/:platform/:rom",
+    component: () => import("@/views/Play.vue"),
+  }
 ];
 
 const router = createRouter({
