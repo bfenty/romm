@@ -19,20 +19,18 @@ window.EJS_defaultOptions = {
 }
 
 // window.EJS_onSaveState = function ({ screenshot, state }) {
-//   debugger;
+//   // Save to backend as .state file
 // };
 
 // window.EJS_onLoadState = function () {
-//   debugger;
+//   // Load the latest state from file
 // };
 
 // Other config options to investigate:
-// config.filePaths = window.EJS_paths;
-// config.loadState = window.EJS_loadStateURL;
-// config.cheats = window.EJS_cheats;
-// config.gamePatchUrl = window.EJS_gamePatchUrl;
-// config.gameParentUrl = window.EJS_gameParentUrl;
-// config.netplayUrl = window.EJS_netplayServer;
+// config.loadState = window.EJS_loadStateURL; // https://emulatorjs.org/docs/Options.html#ejs-loadstateurl
+// config.cheats = window.EJS_cheats; // https://emulatorjs.org/docs/Options.html#ejs-cheats
+// config.gamePatchUrl = window.EJS_gamePatchUrl; // https://emulatorjs.org/docs/Options.html#ejs-gamepatchurl
+// config.netplayUrl = window.EJS_netplayServer; // https://emulatorjs.org/docs4devs/Netplay.html
 
 onMounted(() => {
   fetchRomApi(route.params.platform, route.params.rom)
@@ -51,7 +49,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div style="width: 100%; height: 100%">
+  <div style="width: 640px; height: 480px">
     <div id="game"></div>
   </div>
 </template>
