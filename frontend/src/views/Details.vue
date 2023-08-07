@@ -18,7 +18,6 @@ const route = useRoute();
 const downloadStore = useDownloadStore();
 const rom = ref(undefined);
 const updatedRom = ref(undefined);
-const saveFiles = ref(false);
 const searching = ref(false);
 const searchTerm = ref("");
 const searchBy = ref("Name");
@@ -129,6 +128,8 @@ onBeforeMount(() => {
       loading.value = false;
     });
 });
+
+const playUrl = window.location.href.replace('platform', 'play');
 </script>
 
 <template>
@@ -207,9 +208,9 @@ onBeforeMount(() => {
             </template>
           </v-col>
           <v-col class="pa-0">
-            <v-btn rounded="0" block :disabled="!saveFiles"
-              ><v-icon icon="mdi-content-save-all" size="large"
-            /></v-btn>
+            <v-btn rounded="0" block :href="playUrl">
+              <v-icon icon="mdi-play-circle-outline" size="large" />
+            </v-btn>
           </v-col>
           <v-col class="pa-0">
             <v-menu location="bottom">
