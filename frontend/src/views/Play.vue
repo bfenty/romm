@@ -43,7 +43,7 @@ onMounted(() => {
       rom.value = response.data;
       window.EJS_gameID = rom.value.id;
       window.EJS_gameName = rom.value.name;
-      // window.EJS_backgroundImage = `/assets/romm/resources/${rom.value.path_cover_l}`;
+      window.EJS_backgroundImage = `/assets/romm/resources/${rom.value.path_cover_l}`;
       window.EJS_gameUrl = rom.value.download_path;
       document.body.appendChild(script);
     })
@@ -54,42 +54,51 @@ onMounted(() => {
 </script>
 
 <template>
-  <v-col v-if="!gameRunning" class="v-col-4 offset-4">
-    <v-select clearable label="Save" :items="['Advance Wars.srm']" />
-    <v-select
-      clearable
-      label="State"
-      :items="['Advance Wars.state', 'Advance Wars (2).state']"
-    />
-    <v-select clearable label="BIOS" :items="['gba-bios.zip']" />
-    <v-select
-      clearable
-      label="Patch"
-      :items="[
-        'Advance Wars Balance (AW1) by Kartal',
-        'War Room Sturm (AW1) by Kartal',
-      ]"
-    />
-  </v-col>
-  <div id="game-wrapper" :class="{ running: gameRunning }">
-    <div id="game"></div>
-  </div>
+  <v-container class="h-100">
+    <v-row class="h-100">
+      <v-col v-if="!gameRunning" class="v-col-3">
+        <v-select
+          clearable
+          label="Save"
+          :items="['Advance Wars.srm']"
+        />
+        <v-select
+          clearable
+          label="State"
+
+          :items="['Advance Wars.state', 'Advance Wars (2).state']"
+        />
+        <v-select
+          clearable
+          label="BIOS"
+
+          :items="['gba-bios.zip']"
+        />
+        <v-select
+          clearable
+          label="Patch"
+
+          :items="[
+            'Advance Wars Balance (AW1) by Kartal',
+            'War Room Sturm (AW1) by Kartal',
+          ]"
+        />
+      </v-col>
+      <v-col>
+        <v-sheet rounded id="game-wrapper">
+          <div id="game"></div>
+        </v-sheet>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <style>
 div.ejs_game {
-  background-color: #0d1117;
+  background-color: #191D22;
 }
 
 #game-wrapper {
-  height: 80px;
-  width: 200px;
-  margin: auto;
-}
-
-#game-wrapper.running {
-  height: 100%;
-  width: 100%;
-  margin: 0;
+  aspect-ratio: 16 / 9;
 }
 </style>
