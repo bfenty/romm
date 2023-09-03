@@ -1,15 +1,15 @@
 # Build frontend
 FROM node:lts-alpine as front-build-stage
 WORKDIR /front
-COPY ./frontend/package*.json .
+COPY ./frontend ./
 RUN npm install
-COPY ./frontend .
 RUN npm run build
 
 # Setup frontend
 FROM ubuntu/nginx:1.18-22.04_edge as production-stage
 ARG WEBSERVER_FOLDER=/var/www/html
 COPY --from=front-build-stage /front/dist ${WEBSERVER_FOLDER}
+COPY ./frontend/assets/default_avatar.png ${WEBSERVER_FOLDER}/assets/
 COPY ./frontend/assets/platforms ${WEBSERVER_FOLDER}/assets/platforms
 RUN mkdir -p ${WEBSERVER_FOLDER}/assets/romm && \
     ln -s /romm/library ${WEBSERVER_FOLDER}/assets/romm/library && \
@@ -23,12 +23,13 @@ RUN apt update && \
       apt-key adv --keyserver keyserver.ubuntu.com --recv-keys F23C5A6CF475977595C89F51BA6932366A755776 && \
     apt update && \
     apt install -y --no-install-recommends \
-      libmariadb3 libmariadb-dev gcc \
+      gcc netcat \
+      libmariadb3 libmariadb-dev \
       python3.10 python3.10-dev python3-pip && \
     apt autoremove && \
     rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 WORKDIR /back
-COPY ./pyproject.toml ./poetry.lock .
+COPY ./pyproject.toml ./poetry.lock ./
 RUN pip install --no-cache --upgrade pip && \
     pip install --no-cache poetry && \
     poetry config virtualenvs.create false && \

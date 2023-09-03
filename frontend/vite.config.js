@@ -42,12 +42,15 @@ export default defineConfig(({ mode }) => {
           ],
         },
         workbox: {
-          globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
-          navigateFallbackDenylist: [/^\/assets\/romm\/library/],
+          globPatterns: ["**/*.{js,css,html,ico,png,svg}"],
+          navigateFallbackDenylist: [
+            /\/assets\/romm\/library/,
+            /\/api\/platforms\/.*\/roms\/.*\/download/,
+          ],
         },
         devOptions: {
           enabled: false,
-          type: 'module',
+          type: "module",
         },
       }),
       viteStaticCopy({
@@ -78,6 +81,11 @@ export default defineConfig(({ mode }) => {
           target: `http://localhost:${backendPort}`,
           changeOrigin: false,
           ws: true,
+        },
+        "/openapi.json": {
+          target: `http://localhost:${backendPort}`,
+          changeOrigin: false,
+          rewrite: (path) => path.replace(/^\/openapi.json/, "/openapi.json"),
         },
       },
       port: 3000,

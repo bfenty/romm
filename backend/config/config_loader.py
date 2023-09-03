@@ -9,6 +9,11 @@ from config import (
     ROMM_DB_DRIVER,
     SQLITE_DB_BASE_PATH,
     ROMM_USER_CONFIG_PATH,
+    DB_HOST,
+    DB_PORT,
+    DB_USER,
+    DB_PASSWD,
+    DB_NAME,
 )
 from logger.logger import log
 
@@ -18,25 +23,21 @@ class ConfigLoader:
     def __init__(self, config_path: str = ROMM_USER_CONFIG_PATH):
         try:
             with open(config_path) as config_file:
-                self.config: dict = yaml.load(config_file, Loader=SafeLoader) or {}
+                self.config = yaml.load(config_file, Loader=SafeLoader) or {}
         except FileNotFoundError:
-            self.config: dict = {}
+            self.config = {}
         finally:
             self._parse_config()
 
     @staticmethod
     def get_db_engine() -> str:
         if ROMM_DB_DRIVER == "mariadb":
-            DB_HOST: str = os.environ.get("DB_HOST", "127.0.0.1")
-            try:
-                DB_PORT: int = int(os.environ.get("DB_PORT", 3306))
-            except TypeError:
-                log.critical("DB_PORT variable not set properly")
+            if not DB_USER or not DB_PASSWD:
+                log.critical(
+                    "Missing database credentials. Please check your configuration file"
+                )
                 sys.exit(3)
 
-            DB_USER: str = os.environ.get("DB_USER")
-            DB_PASSWD: str = os.environ.get("DB_PASSWD")
-            DB_NAME: str = os.environ.get("DB_NAME", "romm")
             return (
                 f"mariadb+mariadbconnector://{DB_USER}:%s@{DB_HOST}:{DB_PORT}/{DB_NAME}"
                 % quote_plus(DB_PASSWD)
@@ -50,7 +51,7 @@ class ConfigLoader:
         log.critical(f"{ROMM_DB_DRIVER} database not supported")
         sys.exit(3)
 
-    def _parse_config(self) -> dict:
+    def _parse_config(self):
         self.config["EXCLUDED_PLATFORMS"] = pydash.get(
             self.config, "exclude.platforms", []
         )

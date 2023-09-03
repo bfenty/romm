@@ -28,14 +28,31 @@ def test_get_rom():
     assert urlparse(rom["url_screenshots"][0]).hostname == "images.igdb.com"
 
     rom = igdbh.get_rom("Not a real game title", 4)
-    assert rom == {
-        "r_igdb_id": 0,
-        "r_slug": "",
-        "r_name": "Not a real game title",
-        "summary": "",
-        "url_cover": "",
-        "url_screenshots": [],
-    }
+    assert rom["r_igdb_id"] == 0
+    assert rom["r_slug"] == ""
+    assert rom["r_name"] == "Not a real game title"
+    assert not rom["summary"]
+    assert rom["url_cover"] == ""
+    assert not rom["url_screenshots"]
+
+
+@pytest.mark.vcr()
+def test_get_ps2_opl_rom():
+    rom = igdbh.get_rom("WWE Smack.iso", 8)
+    assert rom["r_igdb_id"] == 0
+    assert rom["r_slug"] == ""
+    assert rom["r_name"] == "WWE Smack"
+    assert not rom["summary"]
+    assert rom["url_cover"] == ""
+    assert not rom["url_screenshots"]
+
+    rom = igdbh.get_rom("SLUS_210.60.WWE Smack.iso", 8)
+    assert rom["r_igdb_id"] == 80852
+    assert rom["r_slug"] == "wwe-smackdown-vs-raw"
+    assert rom["r_name"] == "WWE Smackdown! vs. Raw"
+    assert rom["summary"]
+    assert urlparse(rom["url_cover"]).hostname == "images.igdb.com"
+    assert urlparse(rom["url_screenshots"][0]).hostname == "images.igdb.com"
 
 
 @pytest.mark.vcr()
@@ -77,23 +94,4 @@ def test_get_matched_roms_by_name():
     assert roms[1]["r_name"] == "Dr. Mario 64"
 
     roms = igdbh.get_matched_roms_by_name("Notarealgametitle", 4)
-    assert roms == []
-
-
-@pytest.mark.vcr()
-def test_get_matched_roms():
-    roms = igdbh.get_matched_roms("Paper Mario (USA).n64", 4)
-    assert len(roms) == 9
-
-    assert roms[0]["r_igdb_id"] == 3340
-    assert roms[0]["r_slug"] == "paper-mario"
-    assert roms[0]["r_name"] == "Paper Mario"
-    assert roms[0]["summary"]
-    assert urlparse(roms[0]["url_cover"]).hostname == "images.igdb.com"
-    assert urlparse(roms[0]["url_screenshots"][0]).hostname == "images.igdb.com"
-
-    roms = igdbh.get_matched_roms("Paper Mario (USA).n64", None)
-    assert roms == []
-
-    roms = igdbh.get_matched_roms("Notarealgametitle", 4)
     assert roms == []
