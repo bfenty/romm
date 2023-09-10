@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cd /back
+[[ ${ENABLE_EXPERIMENTAL_REDIS} == "true" ]] && rq-dashboard -b 0.0.0.0 -p 5001 -u redis://${REDIS_HOST}:${REDIS_PORT}/0 || sleep infinity

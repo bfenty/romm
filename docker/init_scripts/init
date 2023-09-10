@@ -15,6 +15,9 @@
 # Start watchdog
 /init_watchdog &
 
+# Start dashboard
+/init_dashboard &
+
 # Wait for any process to exit
 wait -n
 
