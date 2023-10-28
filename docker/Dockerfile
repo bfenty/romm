@@ -31,7 +31,8 @@ RUN apk add --upgrade \
         mariadb-connector-c-dev \
         musl-dev \
         python3-dev \
-        py3-pip
+        py3-pip \
+        postgresql-dev
 
 # Create python venv to not clash with OS python packages
 RUN python3 -m venv /backend/

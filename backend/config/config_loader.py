@@ -42,6 +42,18 @@ class ConfigLoader:
                 f"mariadb+mariadbconnector://{DB_USER}:%s@{DB_HOST}:{DB_PORT}/{DB_NAME}"
                 % quote_plus(DB_PASSWD)
             )
+        
+        if ROMM_DB_DRIVER == "postgresql":
+            if not DB_USER or not DB_PASSWD:
+                log.critical(
+                    "Missing database credentials. Please check your configuration file"
+                )
+                sys.exit(3)
+
+            return (
+                f"postgresql+psycopg2://{DB_USER}:%s@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+                % quote_plus(DB_PASSWD)
+            )
 
         if ROMM_DB_DRIVER == "sqlite":
             if not os.path.exists(SQLITE_DB_BASE_PATH):

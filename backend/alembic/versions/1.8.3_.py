@@ -28,9 +28,10 @@ def upgrade() -> None:
         batch_op.execute(
             "UPDATE roms SET path_cover_l = REPLACE(path_cover_l, '/romm/resources/', '')"
         )
-        batch_op.execute(
-            "UPDATE roms SET path_screenshots = REPLACE(path_screenshots, '/romm/resources/', '')"
-        )
+        # Commented out since path_screenhots is an array
+        # batch_op.execute(
+        #     "UPDATE roms SET path_screenshots = REPLACE(path_screenshots, '/romm/resources/', '')"
+        # )
     # ### end Alembic commands ###
 
 
