@@ -4,14 +4,18 @@ const props = defineProps(["watcher"]);
 <template>
   <v-col
     cols="12"
-    md="4"
-    sm="4"
-    lg="4"
+    md="12"
+    sm="12"
+    lg="12"
+    xl="12"
     :class="{
       'status-item d-flex': true,
       disabled: !watcher.ENABLED,
     }"
+    class="my-3"
   >
+    
+    <v-divider :vertical="true" class="mr-6" />
     <v-icon
       :class="watcher.ENABLED ? 'text-romm-accent-1' : ''"
       :icon="

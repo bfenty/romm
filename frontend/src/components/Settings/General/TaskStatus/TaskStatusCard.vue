@@ -26,21 +26,24 @@ onBeforeMount(async () => {
     <v-divider class="border-opacity-25" />
 
     <v-card-text>
-      <v-row>
+      <v-row no-gutters>
         <task-watcher :watcher="watcher" />
-
-        <v-divider class="border-opacity-25" />
-
+      </v-row>
+      <v-divider class="border-opacity-25 my-6" />
+      <v-row no-gutters>
         <v-col
           v-for="task in scheduler"
           cols="12"
           md="4"
           sm="6"
+          lg="4"
+          xl="4"
           :class="{
             'status-item d-flex': true,
             disabled: !task.ENABLED,
           }"
         >
+          <v-divider :vertical="true" class="mr-6 my-2" />
           <task-scheduler :task="task" />
         </v-col>
       </v-row>
