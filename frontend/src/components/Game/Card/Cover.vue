@@ -112,7 +112,7 @@ function onTouchEnd() {
           class="position-absolute checkbox"
           :class="{ 'checkbox-selected': selected }"
           >{{ selected ? "mdi-circle-slice-8" : "mdi-circle-outline" }}</v-icon
-        >
+        >        
       </v-img>
     </v-hover>
   </router-link>
@@ -121,6 +121,9 @@ function onTouchEnd() {
 <style scoped>
 .rom-title {
   opacity: 0.85;
+}
+.rom-sorting {
+  opacity: 0.7;
 }
 .rom-title.on-hover {
   opacity: 1;

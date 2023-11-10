@@ -33,6 +33,7 @@ function selectRom(event) {
         :selected="selected"
         @selectRom="selectRom"
       />
+      <span class="rom-sorting d-flex bg-tooltip justify-center text-body-2 py-1">{{ rom.file_size }}{{ rom.file_size_units }}</span>
       <action-bar :rom="rom" />
     </v-card>
   </v-hover>

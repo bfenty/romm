@@ -7,7 +7,8 @@ import { views, toTop, normalizeString } from "@/utils/utils";
 import storeGalleryFilter from "@/stores/galleryFilter";
 import storeGalleryView from "@/stores/galleryView";
 import storeRoms from "@/stores/roms";
-import GalleryAppBar from "@/components/Gallery/AppBar/Base.vue";
+import GalleryMainAppBar from "@/components/Gallery/AppBar/Base.vue";
+import GallerySortAppBar from "@/components/Gallery/AppBar/SortBar.vue";
 import GameCard from "@/components/Game/Card/Base.vue";
 import GameDataTable from "@/components/Game/DataTable/Base.vue";
 import SearchRomDialog from "@/components/Dialog/Rom/SearchRom.vue";
@@ -182,7 +183,8 @@ onBeforeRouteUpdate((to, _) => {
 </script>
 
 <template>
-  <gallery-app-bar />
+  <gallery-main-app-bar />
+  <gallery-sort-app-bar />
   <template v-if="filteredRoms.length > 0">
     <v-row no-gutters v-scroll="onScroll">
       <!-- Gallery cards view -->

@@ -4,15 +4,21 @@ import FilterBar from "@/components/Gallery/AppBar/FilterBar.vue";
 import GalleryViewBtn from "@/components/Gallery/AppBar/GalleryViewBtn.vue";
 import ScanBtn from "@/components/Gallery/AppBar/ScanBtn.vue";
 import UploadRomBtn from "@/components/Gallery/AppBar/UploadRomBtn.vue";
+import SortBtn from "@/components/Gallery/AppBar/SortBtn.vue";
 
 // Props
 const auth = storeAuth();
 </script>
 
 <template>
-  <v-app-bar id="gallery-app-bar" elevation="0" density="compact">
+  <v-app-bar
+    id="gallery-app-bar"
+    elevation="0"
+    density="compact"
+  >
     <filter-bar />
     <gallery-view-btn />
+    <sort-btn />
     <template v-if="auth.scopes.includes('roms.write')">
       <upload-rom-btn />
       <scan-btn />
