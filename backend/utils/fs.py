@@ -228,12 +228,19 @@ def get_roms_structure(fs_slug: str):
 def _exclude_files(files, filetype) -> list[str]:
     excluded_extensions = config[f"EXCLUDED_{filetype.upper()}_EXT"]
     excluded_names = config[f"EXCLUDED_{filetype.upper()}_FILES"]
-    filtered_files: list = []
+    filtered_files = []
 
     for file in files:
-        if file.split(".")[-1] in excluded_extensions or file in excluded_names:
+        # Split the file name to get the extension.
+        parts = file.split(".")
+        # Exclude the file if it has no extension or the extension is in the excluded list.
+        if len(parts) == 1 or parts[-1] in excluded_extensions:
+            filtered_files.append(file)
+        # Additionally, check if the entire file name is in the excluded names list.
+        elif file in excluded_names:
             filtered_files.append(file)
 
+    # Return files that are not in the filtered list.
     return [f for f in files if f not in filtered_files]
 
 
